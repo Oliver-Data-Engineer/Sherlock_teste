@@ -1,0 +1,115 @@
+job:
+  name: "Pipeline de Criação e Carga - Tabela Testes"
+  description: "Pipeline parametrizada para ingestão, classificação via LLM e controle de particionamento."
+  owner: "data-platform"
+
+source:
+  # Define a origem dos dados. Opções: "catalog" ou "sql"
+  mode: "catalog" 
+  
+  # Parâmetros usados apenas se mode == "catalog"
+  catalog:
+    database: "workspace_db"
+    table: "tabela_testes"
+  
+  # Parâmetros usados apenas se mode == "sql"
+  sql:
+    # Preencha apenas UM dos dois campos abaixo. Use o pipe (|) ou (>) para queries longas em texto.
+    path: "s3://caminho-do-seu-bucket/sql/sql_arquivo.sql"
+    query: null 
+    
+    # partition_variable agora é um objeto que define regras exclusivas para o SQL
+    partition_variable:
+      name: "data_ref"       # O nome que estará entre chaves no SQL: {data_ref}
+      type: "date"           # Opções: int, string, date
+      format: "YYYY-MM-DD"   # O formato exato que a query espera
+  
+target: 
+  database: "workspace_db"
+  table: "tabela_testes_classificada"
+  format: "parquet"
+  
+  # Colunas da origem que devem ser propagadas para a tabela final.
+  # O schema final = keep_source_columns + colunas geradas pelo LLM.
+  keep_source_columns:
+    - id_registro
+    - dt_atualizacao
+
+
+data: 
+  # Estratégia de Ingestão
+  load_type: "incremental" # Opções: incremental, full, append, overwrite
+  watermark_column: "dt_atualizacao" # Coluna usada para rastrear novos dados na incremental
+  
+  # Particionamento da Tabela Destino
+  partition:
+    name: "dt_processamento"
+    format: "YYYY-MM-DD"
+    type: "int" # Opções: int, string, date
+    lag: 1 # Define a data da partição padrão today() - lag
+  
+  # Estratégia e Janela de Reprocessamento
+  reprocess:
+    enabled: true
+    range_value: 7
+    range_unit: "month" # Opções:  day, month, year
+    
+  # Filtros Opcionais de Carga Inicial ou Execução Manual foramato de Data "%Y-%m-%d" (2026-01-01)
+  backfill:
+    enabled: false
+    start_date: "2026-01-01"
+    end_date: "2026-08-22"
+
+# Agente de IA Classificador de Informações
+agent:
+  id: "agente_classificador_01" 
+  model: "gpt-4o"
+  
+  # NOVO: Parâmetros de inferência
+  parameters:
+    temperature: 0.0 # 0.0 para maior consistência em classificações
+    max_tokens: 512
+
+  # NOVO: Mapeamento claro do que entra no LLM e do que sai
+  mapping:
+    input_columns:
+      - coluna_1 # Apenas estas colunas formarão o contexto do prompt
+      - coluna_2
+    output_schema:
+      # Define o formato do JSON esperado e as novas colunas que serão criadas na tabela
+      - name: "categoria_principal"
+        type: "string"
+      - name: "nivel_risco"
+        type: "int"
+      - name: "justificativa_classificacao"
+        type: "string"
+
+  prompt:
+    text: null
+    # Recomendado apontar para um bucket para não poluir o YAML com textos longos
+    path: "s3://caminho-do-seu-bucket/prompts/prompt_classificacao_v1.txt" 
+    
+  knowledge_base:
+    enabled: false
+    ids:
+      - "base_1"
+      - "base_2"
+      - "base_3"
+
+  # Controle de execução (Essencial para não estourar limites de API)
+  execution:
+    batch_size: 100         # Quantos registros processar por chamada/lote
+    max_retries: 3          # Tentativas em caso de erro (ex: 429 Too Many Requests)
+    rate_limit_rpm: 500     # Limite de requisições por minuto
+    timeout_seconds: 60     # Tempo máximo de espera por resposta
+
+  # MELHORIA: Segurança. Evite chaves em plain text no YAML.
+  credentials:
+    - client_key: "sua_client_key_primaria_aqui"
+      client_secret: "seu_client_secret_primario_aqui"
+
+    - client_key: "sua_client_key_secundaria_aqui"
+      client_secret: "seu_client_secret_secundario_aqui"
+
+    - client_key: "sua_client_key_terciaria_aqui"
+      client_secret: "seu_client_secret_terciario_aqui"
