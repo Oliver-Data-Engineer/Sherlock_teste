@@ -1,0 +1,501 @@
+/* Tokens da home: laranja Itau no lugar do verde do template. */
+.home {
+  --o: #ff6200;
+  --navy: #000d3c;
+  --ink: #000d3c;
+  --paper: #ffffff;
+  --surface: #f1f2f4;
+  --inverse: #000d3c;
+  --line: #000d3c;
+  --muted: #4c4c4c;
+  --radius: 45px;
+
+  color: var(--ink);
+  padding: 32px 0 112px;
+}
+:global([data-theme='dark']) .home {
+  --ink: #ffffff;
+  --paper: #000d3c;
+  --surface: rgba(255, 255, 255, 0.06);
+  --inverse: #0b1c5c;
+  --line: rgba(255, 255, 255, 0.55);
+  --muted: #cfd1d3;
+}
+
+.wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* --- Botoes ---------------------------------------------------------------- */
+.btnDark,
+.btnGhost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 32px;
+  font-size: 1.125rem;
+  line-height: 1.2;
+  text-decoration: none;
+  border-radius: 14px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btnDark {
+  color: #ffffff;
+  background: var(--navy);
+  border: 1px solid var(--navy);
+}
+.btnGhost {
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--ink);
+}
+.btnDark:hover,
+.btnGhost:hover {
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 0 var(--o);
+}
+.btnDark:hover {
+  color: #ffffff;
+}
+.btnGhost:hover {
+  color: var(--ink);
+}
+:global([data-theme='dark']) .btnDark,
+:global([data-theme='dark']) .btnDark:hover {
+  color: var(--navy);
+  background: var(--o);
+  border-color: var(--o);
+}
+:global([data-theme='dark']) .btnDark:hover {
+  box-shadow: 0 4px 0 #ffffff;
+}
+
+/* --- Hero ------------------------------------------------------------------ */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 48px;
+  padding: 32px 0 56px;
+}
+.hero h1 {
+  margin: 0 0 32px;
+  font-size: clamp(2.5rem, 5vw, 3.75rem);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+.lead {
+  max-width: 32rem;
+  margin: 0 0 36px;
+  font-size: 1.2rem;
+  line-height: 1.55;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.heroArt {
+  width: 100%;
+  max-width: 560px;
+  justify-self: end;
+  color: var(--ink);
+}
+
+/* --- Faixa de tecnologias ------------------------------------------------- */
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 48px;
+  padding: 24px 0;
+}
+.stackLabel {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+.stack ul {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px 40px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.stack li {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: -0.01em;
+}
+
+/* --- Cabecalho de secao --------------------------------------------------- */
+.sectionHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 40px;
+  margin: 112px 0 56px;
+}
+.label {
+  margin: 0;
+  padding: 0 8px;
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--navy);
+  background: var(--o);
+  border-radius: 7px;
+}
+.sectionHead p {
+  max-width: 36rem;
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+/* --- Cards de componentes ------------------------------------------------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 40px;
+}
+.card {
+  --hl: var(--o);
+  --art-accent: var(--o);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 24px;
+  min-height: 310px;
+  padding: 50px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 5px 0 var(--line);
+}
+.cardText {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 48px;
+  height: 100%;
+}
+.cardTitle {
+  margin: 0;
+  font-size: 1.875rem;
+  font-weight: 500;
+  line-height: 1.25;
+}
+.cardTitle span {
+  display: block;
+  width: fit-content;
+  padding: 0 7px;
+  color: var(--navy);
+  background: var(--hl);
+  border-radius: 7px;
+}
+.cardArt {
+  width: 170px;
+  height: auto;
+}
+
+.surface {
+  color: var(--ink);
+  background: var(--surface);
+}
+.accent {
+  --hl: #ffffff;
+  --art-accent: #ffffff;
+  color: var(--navy);
+  background: var(--o);
+  border-color: var(--navy);
+  box-shadow: 0 5px 0 var(--navy);
+}
+.inverse,
+.inverseAlt {
+  --hl: #ffffff;
+  color: #ffffff;
+  background: var(--inverse);
+}
+.inverseAlt {
+  --hl: var(--o);
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  width: fit-content;
+  font-size: 1.25rem;
+  color: inherit;
+  text-decoration: none;
+}
+.more:hover {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.arrowCircle {
+  display: grid;
+  place-items: center;
+  width: 41px;
+  height: 41px;
+  border-radius: 50%;
+  background: var(--navy);
+  stroke: var(--o);
+  transition: transform 0.15s;
+}
+.more:hover .arrowCircle {
+  transform: rotate(45deg);
+}
+.inverse .arrowCircle,
+.inverseAlt .arrowCircle {
+  background: #ffffff;
+  stroke: var(--navy);
+}
+:global([data-theme='dark']) .surface .arrowCircle {
+  background: var(--o);
+  stroke: var(--navy);
+}
+
+/* --- Chamada para o simulador --------------------------------------------- */
+.cta {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 32px;
+  margin-top: 112px;
+  padding: 60px;
+  background: var(--surface);
+  border-radius: var(--radius);
+}
+.cta h2 {
+  margin: 0 0 24px;
+  font-size: 1.875rem;
+  font-weight: 500;
+}
+.cta p {
+  max-width: 30rem;
+  margin: 0 0 28px;
+  font-size: 1.125rem;
+}
+.ctaArt {
+  width: 100%;
+  max-width: 380px;
+  margin: -90px 0 -90px auto;
+  color: var(--ink);
+}
+
+/* --- Cenarios (faixa escura) ---------------------------------------------- */
+.cases {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 70px 60px;
+  color: #ffffff;
+  background: var(--navy);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+}
+:global([data-theme='dark']) .cases {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+.case {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 0 48px;
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+}
+.case:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+.case:last-child {
+  padding-right: 0;
+}
+.case p {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+.case code {
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: var(--o);
+  background: rgba(255, 255, 255, 0.08);
+  border: 0;
+}
+.caseLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  font-size: 1.1rem;
+  color: var(--o);
+}
+.caseLink:hover {
+  color: var(--o);
+}
+
+/* --- Etapas (acordeao) ---------------------------------------------------- */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.step {
+  margin: 0;
+  padding: 36px 60px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 5px 0 var(--line);
+}
+.stepOpen {
+  color: var(--navy);
+  background: var(--o);
+  border-color: var(--navy);
+  box-shadow: 0 5px 0 var(--navy);
+}
+.stepHeading {
+  margin: 0;
+}
+.stepButton {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  width: 100%;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.stepButton:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 8px;
+  border-radius: 8px;
+}
+.stepNumber {
+  font-size: 3.75rem;
+  font-weight: 500;
+  line-height: 1;
+}
+.stepTitle {
+  flex: 1;
+  font-size: 1.875rem;
+  font-weight: 500;
+}
+.stepToggle {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  font-size: 2.25rem;
+  line-height: 1;
+  color: var(--navy);
+  background: #f1f2f4;
+  border: 1px solid var(--navy);
+  border-radius: 50%;
+}
+.stepBody {
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 1px solid var(--navy);
+}
+.stepBody p {
+  max-width: 64rem;
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+/* --- Responsivo ----------------------------------------------------------- */
+@media (max-width: 996px) {
+  .hero,
+  .cta {
+    grid-template-columns: 1fr;
+  }
+  .heroArt {
+    justify-self: center;
+    max-width: 440px;
+  }
+  .ctaArt {
+    margin: 0 auto;
+    max-width: 300px;
+  }
+  .cards {
+    grid-template-columns: 1fr;
+  }
+  .stack ul {
+    flex-basis: 100%;
+    justify-content: flex-start;
+    gap: 12px 32px;
+  }
+  .cases {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 48px 32px;
+  }
+  .case,
+  .case:first-child,
+  .case:last-child {
+    padding: 32px 0 0;
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+  }
+  .case:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+}
+@media (max-width: 600px) {
+  .card {
+    grid-template-columns: 1fr;
+    padding: 36px 28px;
+    min-height: 0;
+  }
+  .cardArt {
+    display: none;
+  }
+  .cta {
+    padding: 36px 28px;
+  }
+  .step {
+    padding: 28px 24px;
+  }
+  .stepNumber {
+    font-size: 2.5rem;
+  }
+  .stepTitle {
+    font-size: 1.25rem;
+  }
+  .stepToggle {
+    width: 44px;
+    height: 44px;
+    font-size: 1.75rem;
+  }
+  .label {
+    font-size: 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btnDark,
+  .btnGhost,
+  .arrowCircle {
+    transition: none;
+  }
+}

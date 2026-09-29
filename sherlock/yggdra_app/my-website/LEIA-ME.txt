@@ -1,0 +1,22 @@
+COMO APLICAR
+============
+
+1. Copie a pasta "src" deste zip para dentro de C:\my-website,
+   aceitando SUBSTITUIR os arquivos existentes.
+
+   Mudaram nesta versao (painel de teste redesenhado):
+     src\components\PipelinePlayground\index.js
+     src\components\PipelinePlayground\styles.module.css
+
+   Continuam iguais (vao junto para garantir o conjunto completo):
+     src\components\PipelinePlayground\defaults.js, rules.js, yaml.js
+     src\pages\index.js, index.module.css, pipeline-playground.js
+     src\css\custom.css
+
+2. No terminal:
+     cd C:\my-website
+     npm install js-yaml
+     npm run clear
+     npm start
+
+3. Abra http://localhost:3000/pipeline-playground e recarregue com Ctrl+F5.
